@@ -3,13 +3,17 @@ import { motion } from 'framer-motion';
 import { Heart, Send, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Confetti from './confetti';
+import axios from 'axios';
+import API_BASE_URL from '../config/api';
 
 const FeedbackForm = () => {
   const [feedback, setFeedback] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [typedText, setTypedText] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const fullText = "✨";
 
   useEffect(() => {
     if (isSubmitted) {
@@ -30,11 +34,26 @@ const FeedbackForm = () => {
     if (!feedback.trim()) return;
     
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSubmitted(true);
-    setIsSubmitting(false);
+    setError('');
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/feedback`, {
+        message: feedback
+      });
+
+      if (response.data.success) {
+        setIsSubmitted(true);
+      } else {
+        setError('Something went wrong. Please try again!');
+      }
+    } catch (err) {
+      console.error('Error submitting feedback:', err);
+      setError('Failed to send feedback. Please try again!');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
   if (isSubmitted) {
     return (
       <div className="relative">
@@ -109,11 +128,22 @@ const FeedbackForm = () => {
           <div>
             <textarea
               value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}              placeholder="How was the surprise? ✨"
+              onChange={(e) => setFeedback(e.target.value)}
+              placeholder="How was the surprise? ✨"
               rows={4}
               className="w-full p-4 border-2 border-purple-200 rounded-xl focus:border-purple-400 focus:outline-none transition-colors duration-300 resize-none text-white font-dancing text-lg placeholder-gray-300 bg-black/30"
             />
           </div>
+
+          {error && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-400 text-center font-dancing"
+            >
+              {error}
+            </motion.p>
+          )}
 
           {/* Submit Button */}
           <motion.button
