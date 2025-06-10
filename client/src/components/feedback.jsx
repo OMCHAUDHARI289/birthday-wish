@@ -1,6 +1,7 @@
 // src/components/feedback.jsx
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 const FeedbackForm = () => {
   const [feedback, setFeedback] = useState("");
@@ -15,7 +16,7 @@ const FeedbackForm = () => {
     setError("");
 
     try {
-      await axios.post("http://localhost:5000/api/feedback", {
+      await axios.post(`${API_BASE_URL}/api/feedback`, {
         message: feedback,
       });
       setSubmitted(true);

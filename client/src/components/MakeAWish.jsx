@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 export default function MakeAWish({ isOpen, onClose, onNext, onWishSubmitted }) {
   const [wishText, setWishText] = useState("");
@@ -20,7 +21,7 @@ export default function MakeAWish({ isOpen, onClose, onNext, onWishSubmitted }) 
     if (!wishText.trim()) return;
 
     try {
-      const res = await axios.post("http://localhost:5000/api/wishes", {
+      const res = await axios.post(`${API_BASE_URL}/api/wishes`, {
         message: wishText
       });
 
