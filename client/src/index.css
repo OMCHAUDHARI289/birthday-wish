@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.floating-gifts {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.gift {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+}
+
+.gift-1 {
+  top: 20%;
+  left: 5%;
+}
+
+.gift-2 {
+  top: 70%;
+  left: 8%;
+}
+
+.gift-3 {
+  top: 15%;
+  right: 7%;
+}
+
+.gift-4 {
+  top: 60%;
+  right: 5%;
+}
+
+.confetti-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -20px;
+  will-change: transform;
+  animation: 
+    confettiFall var(--fall-duration, 3s) linear infinite,
+    sway var(--sway-duration, 2.5s) ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(25vh) rotate(90deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(50vh) rotate(180deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(75vh) rotate(270deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100vh) rotate(var(--rotate-deg));
+    opacity: 0.5;
+  }
+}
+
+/* Sway animation for confetti */
+@keyframes sway {
+  0% {
+    margin-left: 0px;
+  }
+  25% {
+    margin-left: 25px;
+  }
+  50% {
+    margin-left: -15px;
+  }
+  75% {
+    margin-left: 20px;
+  }
+  100% {
+    margin-left: 0px;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
