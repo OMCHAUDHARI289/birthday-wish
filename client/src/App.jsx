@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Welcome from "./pages/Welcome";
 import CakeCutting from "./pages/CakeCutting";
@@ -18,6 +18,7 @@ function App() {
         <Route path="/cake-cutting" element={<CakeCutting />} />
         <Route path="/final" element={<Final />} />
         <Route path="/feedback" element={<FeedbackForm />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </MusicProvider>
   );
