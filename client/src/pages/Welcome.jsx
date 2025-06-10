@@ -199,7 +199,7 @@ const BirthdayWelcomePage = () => {  const [timeLeft, setTimeLeft] = useState({
                 🎉 Happy Birthday 🎂
               </h1>
               <p className="cursive-text text-xl md:text-2xl text-yellow-100 font-light drop-shadow-lg">
-                to My Amazing Friend! ✨
+                to My ....Name! ✨
               </p>
             </div>
             

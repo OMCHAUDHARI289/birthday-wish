@@ -38,12 +38,10 @@ const FeedbackForm = () => {
   if (isSubmitted) {
     return (
       <div className="relative">
-        <Confetti />
-        <motion.div
+        <Confetti />          <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border-4 border-gradient-to-r from-purple-200 to-pink-200 relative z-10"
+          transition={{ duration: 0.6 }}          className="bg-black/50 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border-4 border-gradient-to-r from-purple-200 to-pink-200 relative z-10 text-white"
         >
           <div className="text-center">
             <motion.div
@@ -57,9 +55,8 @@ const FeedbackForm = () => {
             
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-4xl font-dancing text-purple-600 mb-4"
+              animate={{ opacity: 1, y: 0 }}              transition={{ delay: 0.5 }}
+              className="text-4xl font-dancing text-white mb-4"
             >
               Thank You! 💖
             </motion.h2>
@@ -67,7 +64,7 @@ const FeedbackForm = () => {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-gray-600 text-lg leading-relaxed font-dancing"
+              className="text-white text-lg leading-relaxed font-dancing"
             >
               {typedText}
               <span className="animate-pulse">|</span>
@@ -106,17 +103,15 @@ const FeedbackForm = () => {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border-4 border-purple-300 relative z-10"
+        transition={{ duration: 0.6 }}        className="bg-black/50 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border-4 border-purple-300 relative z-10"
       >        <div className="p-8 space-y-6">
           {/* Feedback Input */}
           <div>
             <textarea
               value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              placeholder="How was the surprise? "
+              onChange={(e) => setFeedback(e.target.value)}              placeholder="How was the surprise? ✨"
               rows={4}
-              className="w-full p-4 border-2 border-purple-200 rounded-xl focus:border-purple-400 focus:outline-none transition-colors duration-300 resize-none text-gray-700 font-dancing text-lg"
+              className="w-full p-4 border-2 border-purple-200 rounded-xl focus:border-purple-400 focus:outline-none transition-colors duration-300 resize-none text-white font-dancing text-lg placeholder-gray-300 bg-black/30"
             />
           </div>
 

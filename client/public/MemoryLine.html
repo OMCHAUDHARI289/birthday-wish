@@ -81,41 +81,46 @@
             background: rgba(255, 255, 255, 0.7);
             top: 100%;
             left: 50%;
-        }
-
-        .memory-lane-container {
+        }        .memory-lane-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
             position: relative;
-        }
-
-        .header {
+            opacity: 0;
+            transform: scale(0.95);
+            animation: containerFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+        }        .header {
             text-align: center;
             margin-bottom: 3rem;
-            animation: fadeInUp 1.5s ease-out;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: headerSlideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             padding: 2rem;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
         }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, 
-                rgba(255,255,255,0) 0%, 
-                rgba(255,255,255,0.1) 50%, 
-                rgba(255,255,255,0) 100%);
-            transform: rotate(45deg);
-            animation: shine 6s infinite;
+        @keyframes containerFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes headerSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header h1 {
@@ -239,9 +244,7 @@
         .gallery::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.5);
             border-radius: 10px;
-        }
-
-        .memory-card {
+        }        .memory-card {
             flex: 0 0 auto;
             width: 300px;
             height: 400px;
@@ -249,17 +252,20 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            transform: translateY(50px) rotate(var(--rotate, 0deg));
+            transform: perspective(1000px) translateY(100px) translateZ(-100px) scale(0.8) rotate(var(--rotate, 0deg));
             opacity: 0;
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             border: 10px solid white;
             transform-style: preserve-3d;
             z-index: 1;
+            filter: blur(10px);
+            will-change: transform, opacity, filter;
         }
 
         .memory-card.visible {
-            transform: translateY(0) rotate(var(--rotate, 0deg));
+            transform: perspective(1000px) translateY(0) translateZ(0) scale(1) rotate(var(--rotate, 0deg));
             opacity: 1;
+            filter: blur(0);
         }
 
         .memory-img {
@@ -508,26 +514,26 @@
             50% {
                 transform: translateY(-20px) rotate(5deg);
             }
-        }
-
-        @keyframes fadeInUp {
+        }        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
         }
 
-        @keyframes fadeIn {
+        @keyframes slideIn {
             from {
+                transform: translateX(-100%);
                 opacity: 0;
             }
             to {
+                transform: translateX(0);
                 opacity: 1;
-            }
+            }}
         }
 
         @keyframes shine {
@@ -744,11 +750,108 @@
             background: rgba(255, 255, 255, 0.9);
             border-radius: 3px;
             transition: width 0.1s linear;
+        }        /* Music Popup Styles */
+        .music-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            text-align: center;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            color: white;
+        }
+
+        .music-popup.hide {
+            animation: popOut 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        .music-popup h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #FF0080;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-popup p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .music-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .music-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #7928CA, #FF0080);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .music-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-btn.secondary {
+            background: transparent;
+            border: 2px solid #FF0080;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.7);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes popOut {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.7);
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Music Player -->    <div class="birthday-bg"></div>
+    <!-- Music Popup -->
+    <div class="music-popup" id="musicPopup">
+        <h3>🎵 Enhance Your Experience</h3>
+        <p>Would you like to add some music to make this moment even more special?</p>
+        <div class="music-controls">
+            <button class="music-btn" onclick="startMusic()">Yes, Play Music! 🎶</button>
+            <button class="music-btn secondary" onclick="skipMusic()">Maybe Later</button>
+        </div>
+    </div>    <audio id="bgMusic" loop>
+        <source src="maahe-ve.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="birthday-bg"></div>
     <div class="confetti-container" id="confetti-container"></div>
     
     <!-- Floating gifts -->
@@ -880,9 +983,8 @@
             <button class="btn" id="nextButton">More Birthday Surprises!</button>
         </div>
     </div>    <!-- Music Player -->
-    <div class="music-player" id="musicPlayer">
-        <audio id="bgMusic" loop>
-            <source src="Song.mp3" type="audio/mp3">
+    <div class="music-player" id="musicPlayer">        <audio id="bgMusic" loop>
+            <source src="maahe-ve.mp3" type="audio/mp3">
         </audio>
         <button class="music-control" id="playPauseBtn">
             <i class="music-icon" id="playPauseIcon">▶</i>
@@ -1014,11 +1116,13 @@
                     const card = document.createElement('div');
                     card.className = 'memory-card';
                     card.style.setProperty('--rotate', memory.rotate);
-                    
-                    // Add a slight delay for each card for a staggered animation effect
+                      // Add a smoother staggered animation effect with both delay and order
                     setTimeout(() => {
-                        card.classList.add('visible');
-                    }, index * 200);
+                        requestAnimationFrame(() => {
+                            card.style.transitionDelay = `${index * 100}ms`;
+                            card.classList.add('visible');
+                        });
+                    }, 100);
                     
                     card.innerHTML = `
                         <img src="${memory.img}" alt="${memory.title}" class="memory-img">
@@ -1165,6 +1269,43 @@
             console.error('Error playing audio');
             playPauseIcon.textContent = '▶';
             isPlaying = false;
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const musicPopup = document.getElementById('musicPopup');
+            const audio = document.getElementById('bgMusic');
+            
+            function startMusic() {
+                audio.volume = 0;
+                audio.play();
+                // Fade in the music
+                let volume = 0;
+                const fadeIn = setInterval(() => {
+                    if (volume < 0.7) {
+                        volume += 0.1;
+                        audio.volume = volume;
+                    } else {
+                        clearInterval(fadeIn);
+                    }
+                }, 100);
+                
+                musicPopup.classList.add('hide');
+                setTimeout(() => {
+                    musicPopup.style.display = 'none';
+                }, 500);
+            }
+
+            function skipMusic() {
+                musicPopup.classList.add('hide');
+                setTimeout(() => {
+                    musicPopup.style.display = 'none';
+                }, 500);
+            }
+
+            // Make functions globally available
+            window.startMusic = startMusic;
+            window.skipMusic = skipMusic;
         });
     </script>
 </body>
